@@ -8,7 +8,7 @@ const seasonConfig = {
 
 const getSeason = (lat, month) =>{
     if(month > 2 && month < 9){
-        //northern hemisphere
+        //northern hemisphere returns winter
         return lat > 0 ? 'summer': 'winter';
     }
     else{
