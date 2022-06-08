@@ -1,32 +1,44 @@
-//import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-/* function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-} */
+class App extends React.Component{
 
-const App = () => {
-  return (
-    <di>Hi there!</di>
-  );
-};
+  constructor(props){
+    //calling constructor
+    super(props);
+    
+    //init state
+    //! this is the only time we do assign values using state
+    this.state = {lat:null, errorMessage:''} ;
 
+    //get current location
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        //update state  !!!
+        this.setState(
+          {lat:position.coords.latitude
+          }
+          );
+      },
+      (err) => {
+        this.setState({errorMessage:err.message})
+      }
+    );
+  }
+
+  
+  render(){
+    //conditional rendering
+    if(this.state.errorMessage && !this.state.lat)
+    {
+      return(<div>Error:{this.state.errorMessage}</div>);
+    }
+    else if(!this.state.errorMessage && this.state.lat){
+      return(<div>Latitude:{this.state.lat}</div>);
+    }
+    else{
+      return <div>Loading!</div>;
+    }
+  }
+}
 
 export default App;
