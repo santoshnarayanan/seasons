@@ -1,15 +1,10 @@
 import React from 'react';
+import SeasonDisplay from './SeasonDisplay';
 
 class App extends React.Component{
 
-  constructor(props){
-    //calling constructor
-    super(props);
-    
-    //init state
-    //! this is the only time we do assign values using state
-    this.state = {lat:null, errorMessage:''} ;
-  }
+    //! init state and this is the only time we do assign values using state
+    state = {lat:null, errorMessage:''} ;
 
   componentDidMount(){
       //get current location
@@ -24,7 +19,7 @@ class App extends React.Component{
     if(this.state.errorMessage && !this.state.lat)
       return(<div>Error:{this.state.errorMessage}</div>);
     else if(!this.state.errorMessage && this.state.lat)
-      return(<div>Latitude:{this.state.lat}</div>);
+      return(<SeasonDisplay lat={this.state.lat}/>);
     else
       return <div>Loading!</div>;
   }
