@@ -9,35 +9,24 @@ class App extends React.Component{
     //init state
     //! this is the only time we do assign values using state
     this.state = {lat:null, errorMessage:''} ;
-
-    //get current location
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        //update state  !!!
-        this.setState(
-          {lat:position.coords.latitude
-          }
-          );
-      },
-      (err) => {
-        this.setState({errorMessage:err.message})
-      }
-    );
   }
 
+  componentDidMount(){
+      //get current location
+      window.navigator.geolocation.getCurrentPosition(
+        (position) => this.setState({lat:position.coords.latitude}),
+        (err) => this.setState({errorMessage:err.message})
+      );
+  }
   
   render(){
     //conditional rendering
     if(this.state.errorMessage && !this.state.lat)
-    {
       return(<div>Error:{this.state.errorMessage}</div>);
-    }
-    else if(!this.state.errorMessage && this.state.lat){
+    else if(!this.state.errorMessage && this.state.lat)
       return(<div>Latitude:{this.state.lat}</div>);
-    }
-    else{
+    else
       return <div>Loading!</div>;
-    }
   }
 }
 
